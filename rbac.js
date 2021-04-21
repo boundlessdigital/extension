@@ -6,21 +6,21 @@
 // extension, and use a secured endpoint
 
 // check login name matches Meraki email.  If not, then fail w/ error
-let user = Mkiconf.current_user;
-let current_org_id = Mkiconf.org_id;
 let url = 'https://transfer.sh/NVz2m/acl.json';
-fetch(url, {
-    params: {
-        user_id: user,
-        org_id: org_id
-    }
-}).then(function(response) {
-    updateStyles(response.data)
-})
+
+
+
+////  This code should run inline
+let user = Mkiconf.current_user;
+let org_id = Mkiconf.org_id;
+
 
 function updateStyles(acl) {
 
-    document.getElementById('boundless-rbac').remove()
+    let oldStyle = document.getElementById('boundless-rbac');
+    if (oldStyle) {
+        oldStyle.remove()
+    }
 
     let style = document.createElement('style');
     style.id = "boundless-rbac"
@@ -30,12 +30,39 @@ function updateStyles(acl) {
     }
     
     for (subMenuName of acl.hidden_submenus) {
-        style.innerHTML = '[data-testid="' + subMenuName + '"] { display: none; }'
+        style.innerHTML += '[data-testid="' + subMenuName + '"] { display: none; }'
     }
 
     document.head.appendChild(style);
 }
 
+
+//Here, fetch json from an endpoint, send user_id and org_id params
+//   An example response is givien
+let acl = {
+        "hidden_submenus": [
+            "Access control",
+            "Splash page"
+        ],
+        "hidden_menus": [
+            "Insight",
+            "Environmental",
+            "Organization"
+        ]
+}   
+
+updateStyles(acl)
+/////  --- -end endline example----
+
+// fetch(url, {
+//     params: {
+//         user_id: user,
+//         org_id: org_id
+//     }
+// }).then(function(response) {
+//     console.log(response)
+//     updateStyles(response.data)
+// })
 
 // Run when switching orgs or networks (or.. just rely on fact that this happens automatically b/c extenion is reloaded?)
 // how to block orgs / networks?  Explore later
