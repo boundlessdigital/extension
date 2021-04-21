@@ -1,0 +1,1 @@
+curl --upload-file acl.json https://transfer.sh/acl.json
