@@ -47,7 +47,8 @@ let acl = {
         "hidden_menus": [
             "Insight",
             "Environmental",
-            "Organization"
+            "Organization",
+            "Wireless"
         ]
 }   
 
